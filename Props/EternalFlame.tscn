@@ -1,0 +1,140 @@
+[gd_scene load_steps=11 format=3 uid="uid://clj2a3lsyuph4"]
+
+[ext_resource type="Script" uid="uid://djpjno0ut4a6" path="res://Props/eternal_flame.gd" id="1_6ttwm"]
+[ext_resource type="Texture2D" uid="uid://bm83ndlm4xvoo" path="res://Props/FirePit.png" id="1_wqjeu"]
+[ext_resource type="Texture2D" uid="uid://d0pefxww4204d" path="res://Props/Torch.png" id="3_861oh"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7lxhg"]
+atlas = ExtResource("3_861oh")
+region = Rect2(0, 0, 14, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_e4hh5"]
+atlas = ExtResource("3_861oh")
+region = Rect2(15, 0, 14, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ntcc8"]
+atlas = ExtResource("3_861oh")
+region = Rect2(30, 0, 14, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_861oh"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": null
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7lxhg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_e4hh5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ntcc8")
+}],
+"loop": true,
+"name": &"lit",
+"speed": 10.0
+}]
+
+[sub_resource type="Animation" id="Animation_861oh"]
+resource_name = "lightUp"
+length = 1.2
+tracks/0/type = "method"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Fire3")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.4),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [&"lit", 1.0, false],
+"method": &"play"
+}]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Fire2")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.8),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [&"lit", 1.0, false],
+"method": &"play"
+}]
+}
+tracks/2/type = "method"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Fire")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(1.2),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [&"lit", 1.0, false],
+"method": &"play"
+}]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_tr0g4"]
+_data = {
+&"lightUp": SubResource("Animation_861oh")
+}
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_861oh"]
+size = Vector2(48, 32)
+
+[node name="Eternal Flame" type="Node2D"]
+script = ExtResource("1_6ttwm")
+
+[node name="Fire Pit" type="Sprite2D" parent="."]
+texture = ExtResource("1_wqjeu")
+
+[node name="Fire3" type="AnimatedSprite2D" parent="."]
+position = Vector2(4, -10)
+sprite_frames = SubResource("SpriteFrames_861oh")
+animation = &"lit"
+autoplay = "default"
+
+[node name="Fire2" type="AnimatedSprite2D" parent="."]
+position = Vector2(-4, -10)
+sprite_frames = SubResource("SpriteFrames_861oh")
+animation = &"lit"
+autoplay = "default"
+
+[node name="Fire" type="AnimatedSprite2D" parent="."]
+position = Vector2(0, -10)
+sprite_frames = SubResource("SpriteFrames_861oh")
+animation = &"lit"
+autoplay = "default"
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_tr0g4")
+}
+
+[node name="Collider" type="StaticBody2D" parent="."]
+collision_mask = 0
+
+[node name="Shape" type="CollisionPolygon2D" parent="Collider"]
+polygon = PackedVector2Array(-5, 0, -10, 3, -10, 5, -5, 8, 5, 8, 10, 5, 10, 3, 5, 0)
+
+[node name="Activator" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 2
+
+[node name="Shape" type="CollisionShape2D" parent="Activator"]
+shape = SubResource("RectangleShape2D_861oh")
+
+[connection signal="body_entered" from="Activator" to="." method="bodyEntered"]

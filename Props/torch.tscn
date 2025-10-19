@@ -1,0 +1,73 @@
+[gd_scene load_steps=9 format=3 uid="uid://idj7e4u10hog"]
+
+[ext_resource type="Script" uid="uid://c0sksls8vbd55" path="res://Props/torch.gd" id="1_3kd47"]
+[ext_resource type="Texture2D" uid="uid://d0pefxww4204d" path="res://Props/Torch.png" id="1_8n2ry"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3kd47"]
+atlas = ExtResource("1_8n2ry")
+region = Rect2(3, 18, 8, 15)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7lxhg"]
+atlas = ExtResource("1_8n2ry")
+region = Rect2(0, 0, 14, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_e4hh5"]
+atlas = ExtResource("1_8n2ry")
+region = Rect2(15, 0, 14, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ntcc8"]
+atlas = ExtResource("1_8n2ry")
+region = Rect2(30, 0, 14, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_65o43"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": null
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7lxhg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_e4hh5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ntcc8")
+}],
+"loop": true,
+"name": &"lit",
+"speed": 10.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_8n2ry"]
+size = Vector2(12, 12)
+
+[node name="Torch" type="Node2D"]
+script = ExtResource("1_3kd47")
+
+[node name="Base" type="Sprite2D" parent="."]
+position = Vector2(0, -24)
+texture = SubResource("AtlasTexture_3kd47")
+offset = Vector2(0, 0.5)
+
+[node name="Fire" type="AnimatedSprite2D" parent="."]
+position = Vector2(0, -36)
+sprite_frames = SubResource("SpriteFrames_65o43")
+autoplay = "default"
+frame_progress = 0.27002722
+
+[node name="Activator" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 2
+
+[node name="Shape" type="CollisionShape2D" parent="Activator"]
+position = Vector2(0, 6)
+shape = SubResource("RectangleShape2D_8n2ry")
+
+[connection signal="body_entered" from="Activator" to="." method="playerEntered"]
+[connection signal="body_exited" from="Activator" to="." method="playerExited"]

@@ -1,0 +1,18 @@
+[gd_scene load_steps=3 format=3 uid="uid://cfhw3ovotl3ax"]
+
+[ext_resource type="Script" uid="uid://bedtgfi6dt2dt" path="res://Props/pillar.gd" id="1_abguu"]
+[ext_resource type="Texture2D" uid="uid://c86okdx5qwwke" path="res://Props/Pillar.png" id="2_40wi1"]
+
+[node name="Pillar" type="Node2D"]
+z_index = 1
+script = ExtResource("1_abguu")
+
+[node name="Sprite" type="Sprite2D" parent="."]
+position = Vector2(0, -24)
+texture = ExtResource("2_40wi1")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+collision_mask = 0
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D"]
+polygon = PackedVector2Array(-3, 0, -7, 3, -7, 5, -3, 8, 3, 8, 7, 5, 7, 3, 3, 0)
