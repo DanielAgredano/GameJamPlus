@@ -1,5 +1,7 @@
 extends Node2D
 
+signal S_lit
+
 @export var preLit = false
 var lit = false
 
@@ -15,6 +17,7 @@ func _process(_delta: float) -> void:
 func playerEntered(_body: Node2D) -> void:
 	if Game.player.hp > 0.0 and not lit:
 		$Fire.play("lit")
+		S_lit.emit()
 		lit = true
 	if lit:
 		Game.player.dark = false

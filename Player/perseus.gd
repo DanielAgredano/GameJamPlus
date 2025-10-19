@@ -121,7 +121,10 @@ func _physics_process(delta: float) -> void:
 	
 	velocity = Vector2(dirX,dirY).normalized() * SPEED * delta * 20
 	
-	if run: velocity *= 1.7
+	if run:
+		velocity *= 1.7
+		hp = move_toward(hp,0.0,0.3)
+		if hp <= 0.0: dark = true
 	
 	if attack: velocity *= 0.0
 	
