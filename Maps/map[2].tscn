@@ -69,6 +69,8 @@ enemyRequirement = 4
 
 [node name="Button" parent="." instance=ExtResource("9_ptvdc")]
 position = Vector2(352, -216)
+collision_layer = 0
+collision_mask = 2
 script = ExtResource("10_pf48w")
 
 [connection signal="S_death" from="Enemy" to="Door" method="decreaseEnemy"]

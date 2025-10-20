@@ -11,6 +11,5 @@ func _process(delta: float) -> void:
 	pass
 
 func startText():
-	
 	$"../AnimationPlayer".play("new_animation")
 	started = true

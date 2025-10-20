@@ -261,11 +261,12 @@ grow_vertical = 0
 [node name="Text" type="Label" parent="CanvasLayer/Control3" groups=["WallText"]]
 modulate = Color(1, 1, 1, 0)
 layout_mode = 0
-offset_left = -372.0
-offset_top = -16.0
-offset_right = 368.0
-offset_bottom = 10.0
+offset_left = -460.0
+offset_top = -48.0
+offset_right = 462.0
+offset_bottom = -6.0
 theme_override_fonts/font = ExtResource("15_elkpi")
+theme_override_font_sizes/font_size = 26
 text = "aegfafafawfaegaegaegaegf"
 horizontal_alignment = 1
 script = ExtResource("16_0yprl")

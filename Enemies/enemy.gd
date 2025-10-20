@@ -43,6 +43,7 @@ func _physics_process(delta: float) -> void:
 	
 	velocity = SPEED * delta * Vector2(1.0,0.0).rotated(angle) * extraSpeed
 	
+	$A_Body.flip_h = (angle<(PI/2.0) and angle>(-PI/2.0))
 		
 	move_and_slide()
 

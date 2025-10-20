@@ -1,6 +1,64 @@
-[gd_scene load_steps=3 format=3 uid="uid://c7xicicmmtkj4"]
+[gd_scene load_steps=12 format=3 uid="uid://c7xicicmmtkj4"]
 
 [ext_resource type="Script" uid="uid://kd1uvjwrs6s3" path="res://Enemies/enemy.gd" id="1_3ih25"]
+[ext_resource type="Texture2D" uid="uid://nv8imu15uguj" path="res://Enemies/Snakes.png" id="2_bxkaj"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_47qgu"]
+atlas = ExtResource("2_bxkaj")
+region = Rect2(8, 18, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_572h1"]
+atlas = ExtResource("2_bxkaj")
+region = Rect2(40, 18, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rt1x0"]
+atlas = ExtResource("2_bxkaj")
+region = Rect2(72, 18, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8wvsg"]
+atlas = ExtResource("2_bxkaj")
+region = Rect2(104, 18, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gk8ng"]
+atlas = ExtResource("2_bxkaj")
+region = Rect2(136, 18, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4o6mh"]
+atlas = ExtResource("2_bxkaj")
+region = Rect2(168, 18, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_koi6q"]
+atlas = ExtResource("2_bxkaj")
+region = Rect2(200, 18, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_jlnat"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_47qgu")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_572h1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rt1x0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8wvsg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gk8ng")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4o6mh")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_koi6q")
+}],
+"loop": true,
+"name": &"default",
+"speed": 10.0
+}]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_3ih25"]
 radius = 88.02273
@@ -10,11 +68,11 @@ collision_layer = 0
 motion_mode = 1
 script = ExtResource("1_3ih25")
 
-[node name="ColorRect" type="ColorRect" parent="."]
-offset_left = -8.5
-offset_top = -12.0
-offset_right = 7.5
-offset_bottom = 4.0
+[node name="A_Body" type="AnimatedSprite2D" parent="."]
+position = Vector2(0, -4)
+sprite_frames = SubResource("SpriteFrames_jlnat")
+autoplay = "default"
+frame_progress = 0.8529568
 
 [node name="Hitbox" type="Area2D" parent="."]
 collision_layer = 0
