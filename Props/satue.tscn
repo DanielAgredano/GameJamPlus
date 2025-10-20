@@ -1,0 +1,40 @@
+[gd_scene load_steps=6 format=3 uid="uid://dv6pqhn3owr7m"]
+
+[ext_resource type="Script" uid="uid://bqp7q82o00p27" path="res://Props/satue.gd" id="1_nx8bh"]
+[ext_resource type="Texture2D" uid="uid://cv1s7h01d2vld" path="res://Tiles/Fantasy Dungeon Tileset/Dungeon Environment.png" id="1_wfnml"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nx8bh"]
+atlas = ExtResource("1_wfnml")
+region = Rect2(240, 17, 16, 32)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_q0tw5"]
+size = Vector2(16, 16)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_l84mf"]
+size = Vector2(16, 16)
+
+[node name="Satue" type="Node2D"]
+script = ExtResource("1_nx8bh")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(0, -8)
+texture = SubResource("AtlasTexture_nx8bh")
+
+[node name="Activator" type="Area2D" parent="."]
+position = Vector2(0, -8)
+collision_layer = 0
+collision_mask = 2
+
+[node name="Shape" type="CollisionShape2D" parent="Activator"]
+position = Vector2(0, 24)
+shape = SubResource("RectangleShape2D_q0tw5")
+
+[node name="Collision" type="StaticBody2D" parent="."]
+position = Vector2(0, -8)
+collision_mask = 0
+
+[node name="Shape" type="CollisionShape2D" parent="Collision"]
+position = Vector2(0, 8)
+shape = SubResource("RectangleShape2D_l84mf")
+
+[connection signal="body_entered" from="Activator" to="." method="bodyEntered"]

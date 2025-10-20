@@ -10,6 +10,7 @@ func _process(_delta: float) -> void:
 	pass
 
 func bodyEntered(body: Node2D) -> void:
+	Game.player.dir = "D"
 	body.door = destination
 	Game.loadMap(destinationMap)
 	Game.map.queue_free()

@@ -1,5 +1,6 @@
 extends CharacterBody2D
 
+signal S_death
 
 const SPEED = 1200.0
 const MULT = 2.5
@@ -24,11 +25,12 @@ func damage(d,k):
 	knockback = k
 	$T_knockback.start()
 	if hp <= 0.0:
+		S_death.emit()
 		queue_free()
 
 func _physics_process(delta: float) -> void:
 	var extraSpeed = 1.0
-	if $Vision.get_overlapping_bodies():
+	if $Vision.get_overlapping_bodies() and not Game.player.isInvisible():
 		angle = position.angle_to_point(Game.player.position + Vector2(0.0,+8.0))
 		extraSpeed = MULT
 	

@@ -5,6 +5,8 @@ const SPEED = 300.0
 const JUMP_VELOCITY = -400.0
 
 @export_range(0.0,100.0) var hp = 100.0
+@export_enum("Boots","Helmet","Shield") var item = ""
+@export_range(0.0,100.0) var itemDurability = 100.0
 
 var dir = 'D'
 var action = "Idle"
@@ -12,6 +14,9 @@ var attack
 var dark = false
 var door = ""
 var dead = false
+var itemActive = false
+
+var bootMult = 1.0
 
 const dirAxis = {
 	'U':'V',
@@ -67,8 +72,6 @@ func setDir():
 		newDir = 'R'
 	if newDir == "": return
 	changeDirection()
-	
-	
 
 func setAction():
 	var walkActions = ["Up","Down","Left","Right"]
@@ -101,6 +104,7 @@ func damage(dmg):
 		$Animation.play("death")
 		door = ""
 		dead = true
+		itemActive = false
 	if hp <= 0.0:
 		hp = 0.0
 		dark = true
@@ -109,6 +113,28 @@ func restore():
 	$Timers/T_Recover.stop()
 	$Timers/T_Restore.start()
 
+func getItem(i):
+	item = i
+	itemDurability = 100.0
+
+func itemHandle():
+	if item == "": return
+	itemActive = !itemActive
+	if item == "Boots":
+		if itemActive: bootMult = 1.5
+		else: bootMult = 1.0
+	if item == "Helmet":
+		if itemActive: $A_body.modulate.a = 0.25
+		else: $A_body.modulate.a = 1.0
+	if item == "Shield":
+		pass
+
+func isInvisible():
+	return item == "Helmet" and itemActive
+
+func isUsingBoots():
+	return item == "Boots" and itemActive and velocity.length() > 0.0
+
 func _physics_process(delta: float) -> void:
 	if dead: return
 	var dirX := Input.get_axis("Left", "Right")
@@ -116,9 +142,9 @@ func _physics_process(delta: float) -> void:
 	
 	var run = Input.is_action_pressed("Run")
 	
-	if Input.is_action_just_pressed("Hurt"):
-		damage(20.0)
-	
+	#if Input.is_action_just_pressed("Hurt"):
+		#damage(20.0)
+	#
 	if $Timers/T_Recover.is_stopped() and not dark:
 		var res = 0.05
 		if not $Timers/T_Restore.is_stopped():
@@ -127,6 +153,10 @@ func _physics_process(delta: float) -> void:
 	
 	attack = Input.is_action_just_pressed("Attack")
 	
+	var itemUsed = Input.is_action_just_pressed("Item")
+	
+	if itemUsed: itemHandle()
+	
 	if attack and $Timers/T_Attack.is_stopped():
 		$Sword.play(dir)
 		$Timers/T_Attack.start()
@@ -134,7 +164,7 @@ func _physics_process(delta: float) -> void:
 	if not $Timers/T_Attack.is_stopped():
 		attack = true
 	
-	velocity = Vector2(dirX,dirY).normalized() * SPEED * delta * 20
+	velocity = Vector2(dirX,dirY).normalized() * SPEED * delta * 20 * bootMult
 	
 	if run and velocity.length()>0.0:
 		velocity *= 1.7
@@ -142,6 +172,15 @@ func _physics_process(delta: float) -> void:
 		if hp <= 0.0: dark = true
 	
 	if attack: velocity *= 0.0
+	
+	if isUsingBoots(): itemDurability = move_toward(itemDurability,0.0,0.3)
+	if isInvisible(): itemDurability = move_toward(itemDurability,0.0,0.1)
+	
+	if itemDurability <= 0.0:
+		bootMult = 1.0
+		$A_body.modulate.a = 1.0
+		itemActive = false
+		item = ""
 	
 	setDir()
 	setAction()

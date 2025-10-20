@@ -1,6 +1,7 @@
 extends Node2D
 
 var open = false
+@export var enemyRequirement:int = 0
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -22,3 +23,8 @@ func unlock():
 	$AnimationPlayer.play("lower")
 	Tracker.add("door",position)
 	open = true
+
+func decreaseEnemy():
+	enemyRequirement -= 1
+	if enemyRequirement == 0:
+		unlock()

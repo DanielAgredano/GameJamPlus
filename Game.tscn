@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://de70icnxppv7c"]
+[gd_scene load_steps=27 format=3 uid="uid://de70icnxppv7c"]
 
 [ext_resource type="PackedScene" uid="uid://bjfj53k2t7qgf" path="res://Player/perseus.tscn" id="1_wbfu4"]
 [ext_resource type="Script" uid="uid://cee04nwhbqc8f" path="res://gameNode.gd" id="1_yhmtn"]
@@ -11,6 +11,12 @@
 [ext_resource type="Texture2D" uid="uid://dvxnf1s07j4s5" path="res://UI/LightMeter/Fill.png" id="7_2vekm"]
 [ext_resource type="PackedScene" uid="uid://cftqud8ptpvyh" path="res://Maps/map[1].tscn" id="10_yx171"]
 [ext_resource type="Texture2D" uid="uid://d0pefxww4204d" path="res://Props/Torch.png" id="11_gwjdr"]
+[ext_resource type="Texture2D" uid="uid://s4ogm4ujpm62" path="res://UI/Items/Boots.png" id="11_yyih5"]
+[ext_resource type="Texture2D" uid="uid://bv5ovc1lm0xyh" path="res://UI/Items/Helmet.png" id="12_qjyg3"]
+[ext_resource type="Texture2D" uid="uid://c5h7jon8ayvsf" path="res://UI/Items/Shield.png" id="13_elkpi"]
+[ext_resource type="Script" uid="uid://dalymgvk2aoak" path="res://UI/item.gd" id="14_qjyg3"]
+[ext_resource type="FontFile" uid="uid://e2w6nbbi51mj" path="res://Fonts/VINERITC.TTF" id="15_elkpi"]
+[ext_resource type="Script" uid="uid://c28nx7fijgu8k" path="res://text.gd" id="16_0yprl"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_r0x5m"]
 shader = ExtResource("4_t88pq")
@@ -57,11 +63,109 @@ animations = [{
 "speed": 10.0
 }]
 
+[sub_resource type="SpriteFrames" id="SpriteFrames_0yprl"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("11_yyih5")
+}],
+"loop": true,
+"name": &"Boots",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("12_qjyg3")
+}],
+"loop": true,
+"name": &"Helmet",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("13_elkpi")
+}],
+"loop": true,
+"name": &"Shield",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": null
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="Animation" id="Animation_0yprl"]
+resource_name = "new_animation"
+length = 15.0
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Text:text")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 3, 6, 9, 12),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": ["No calles, oh musa", "De las injusticias que los dioses han cometido", "La maldición de Aracne", "Las tantas víctimas de Zeus", "Y mi ahora monstruosa forma"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Text:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.4, 2.6, 3, 3.4, 5.6, 6, 6.4, 8.599999, 9, 9.4, 11.6, 12, 12.400001, 14.6, 15),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_wuoie"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Text:text")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": ["aegfafafawfaegaegaegaegf"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Text:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_bvhbk"]
+_data = {
+&"RESET": SubResource("Animation_wuoie"),
+&"new_animation": SubResource("Animation_0yprl")
+}
+
 [node name="Game" type="Node"]
 script = ExtResource("1_yhmtn")
 
 [node name="Perseus" parent="." instance=ExtResource("1_wbfu4")]
 z_index = 1
+item = "Boots"
 
 [node name="CameraPos" type="RemoteTransform2D" parent="Perseus"]
 position = Vector2(0, 32)
@@ -123,5 +227,52 @@ animation = &"lit"
 autoplay = "lit"
 frame_progress = 0.5170062
 centered = false
+
+[node name="Control2" type="Control" parent="CanvasLayer"]
+layout_mode = 3
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -40.0
+offset_bottom = 40.0
+grow_horizontal = 0
+
+[node name="Item" type="AnimatedSprite2D" parent="CanvasLayer/Control2"]
+position = Vector2(-64, 8)
+scale = Vector2(3, 3)
+sprite_frames = SubResource("SpriteFrames_0yprl")
+animation = &"Helmet"
+centered = false
+script = ExtResource("14_qjyg3")
+
+[node name="Control3" type="Control" parent="CanvasLayer"]
+layout_mode = 3
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -20.0
+offset_top = -40.0
+offset_right = 20.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="Text" type="Label" parent="CanvasLayer/Control3" groups=["WallText"]]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 0
+offset_left = -372.0
+offset_top = -16.0
+offset_right = 368.0
+offset_bottom = 10.0
+theme_override_fonts/font = ExtResource("15_elkpi")
+text = "aegfafafawfaegaegaegaegf"
+horizontal_alignment = 1
+script = ExtResource("16_0yprl")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="CanvasLayer/Control3"]
+libraries = {
+&"": SubResource("AnimationLibrary_bvhbk")
+}
 
 [node name="Map" parent="." instance=ExtResource("10_yx171")]
