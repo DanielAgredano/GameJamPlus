@@ -6,7 +6,7 @@ signal S_lit
 var lit = false
 
 func _ready() -> void:
-	if preLit:
+	if preLit or Tracker.check("torch",position):
 		$Fire.play("lit")
 		lit = true
 
@@ -18,7 +18,9 @@ func playerEntered(_body: Node2D) -> void:
 	if Game.player.hp > 0.0 and not lit:
 		$Fire.play("lit")
 		S_lit.emit()
+		$P_lit.emitting = true
 		lit = true
+		Tracker.add("torch",position)
 	if lit:
 		Game.player.dark = false
 		Game.player.restore()

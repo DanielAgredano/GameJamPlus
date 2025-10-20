@@ -10,6 +10,8 @@ var dir = 'D'
 var action = "Idle"
 var attack
 var dark = false
+var door = ""
+var dead = false
 
 const dirAxis = {
 	'U':'V',
@@ -85,9 +87,20 @@ func setAction():
 			return
 	action = "Idle"
 
+func restart():
+	Game.restart()
+	dead = false
+	dark = false
+	hp = 100.0
+
 func damage(dmg):
 	hp -= dmg
+	$Animation.play("hit")
 	$Timers/T_Recover.start()
+	if dark:
+		$Animation.play("death")
+		door = ""
+		dead = true
 	if hp <= 0.0:
 		hp = 0.0
 		dark = true
@@ -97,6 +110,7 @@ func restore():
 	$Timers/T_Restore.start()
 
 func _physics_process(delta: float) -> void:
+	if dead: return
 	var dirX := Input.get_axis("Left", "Right")
 	var dirY := Input.get_axis("Up", "Down")
 	
@@ -114,6 +128,7 @@ func _physics_process(delta: float) -> void:
 	attack = Input.is_action_just_pressed("Attack")
 	
 	if attack and $Timers/T_Attack.is_stopped():
+		$Sword.play(dir)
 		$Timers/T_Attack.start()
 	
 	if not $Timers/T_Attack.is_stopped():
@@ -121,7 +136,7 @@ func _physics_process(delta: float) -> void:
 	
 	velocity = Vector2(dirX,dirY).normalized() * SPEED * delta * 20
 	
-	if run:
+	if run and velocity.length()>0.0:
 		velocity *= 1.7
 		hp = move_toward(hp,0.0,0.3)
 		if hp <= 0.0: dark = true
@@ -138,3 +153,7 @@ func _physics_process(delta: float) -> void:
 
 func _on_t_attack_timeout() -> void:
 	attack = false
+
+
+func damageEnemy(area: Area2D) -> void:
+	area.get_parent().damage(10.0,dir)

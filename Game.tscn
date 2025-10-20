@@ -1,6 +1,7 @@
-[gd_scene load_steps=16 format=3 uid="uid://de70icnxppv7c"]
+[gd_scene load_steps=17 format=3 uid="uid://de70icnxppv7c"]
 
 [ext_resource type="PackedScene" uid="uid://bjfj53k2t7qgf" path="res://Player/perseus.tscn" id="1_wbfu4"]
+[ext_resource type="Script" uid="uid://cee04nwhbqc8f" path="res://gameNode.gd" id="1_yhmtn"]
 [ext_resource type="Script" uid="uid://kd4svtaeufpm" path="res://Player/cameraMover.gd" id="3_u44n3"]
 [ext_resource type="Texture2D" uid="uid://ikvyykuoluh" path="res://Props/DarkRoom.png" id="4_sb48q"]
 [ext_resource type="Shader" uid="uid://cxibgi5mhu8pf" path="res://Props/Darkness.gdshader" id="4_t88pq"]
@@ -57,6 +58,7 @@ animations = [{
 }]
 
 [node name="Game" type="Node"]
+script = ExtResource("1_yhmtn")
 
 [node name="Perseus" parent="." instance=ExtResource("1_wbfu4")]
 z_index = 1

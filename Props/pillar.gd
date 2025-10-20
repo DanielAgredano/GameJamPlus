@@ -6,7 +6,7 @@ func _ready() -> void:
 
 
 func _process(_delta: float) -> void:
-	if global_position.y < $"../../Perseus".global_position.y+8:
+	if global_position.y < Game.player.global_position.y+8:
 		z_index = 0
 	else:
 		z_index = 1

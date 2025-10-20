@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://idj7e4u10hog"]
+[gd_scene load_steps=10 format=3 uid="uid://idj7e4u10hog"]
 
 [ext_resource type="Script" uid="uid://c0sksls8vbd55" path="res://Props/torch.gd" id="1_3kd47"]
 [ext_resource type="Texture2D" uid="uid://d0pefxww4204d" path="res://Props/Torch.png" id="1_8n2ry"]
@@ -47,6 +47,10 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8n2ry"]
 size = Vector2(12, 12)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_mfoqt"]
+atlas = ExtResource("1_8n2ry")
+region = Rect2(20, 0, 4, 5)
+
 [node name="Torch" type="Node2D"]
 script = ExtResource("1_3kd47")
 
@@ -68,6 +72,20 @@ collision_mask = 2
 [node name="Shape" type="CollisionShape2D" parent="Activator"]
 position = Vector2(0, 6)
 shape = SubResource("RectangleShape2D_8n2ry")
+
+[node name="P_lit" type="CPUParticles2D" parent="."]
+position = Vector2(0, -36)
+emitting = false
+amount = 16
+texture = SubResource("AtlasTexture_mfoqt")
+lifetime = 0.3
+one_shot = true
+spread = 180.0
+gravity = Vector2(0, 0)
+initial_velocity_min = 147.5
+initial_velocity_max = 147.5
+linear_accel_min = -88.8
+linear_accel_max = -88.8
 
 [connection signal="body_entered" from="Activator" to="." method="playerEntered"]
 [connection signal="body_exited" from="Activator" to="." method="playerExited"]

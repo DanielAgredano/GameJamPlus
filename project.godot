@@ -18,6 +18,7 @@ config/icon="res://icon.svg"
 [autoload]
 
 Game="*res://game.gd"
+Tracker="*res://tracker.gd"
 
 [display]
 
